@@ -1,33 +1,25 @@
-import './App.css';
-import { useState } from "react"
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import {  LanguageContext } from './store/LanguageContext';
 
 function App() {
-  const { t, i18n: {changeLanguage, language} } = useTranslation();
- const [currentLanguage, setCurrentLanguage] = useState(language)
- const handleChangeLanguage = () => {
-   const newLanguage = currentLanguage === "en" ? "tr" : "en";
-   setCurrentLanguage(newLanguage);
-   changeLanguage(newLanguage);
- }
+  const { t } = useTranslation();
+  const { language, changeLanguage } = React.useContext(LanguageContext);
 
   return (
     <div className="App">
-      <h1>
-       Our Translated Header: 
-       {t('headerTitle', { appName: "App for Translations" })}
-     </h1>
-     <h3>
-       Current Language: {currentLanguage}
-     </h3>
-     <button 
-        type="button" 
-        onClick={handleChangeLanguage}
-     >
-      Change Language
-     </button>
+      <header className="App-header">
+        <h1>{t('title')}</h1>
+        <p>{t('greeting')}</p>
+        <button onClick={() => {changeLanguage(language === 'tr' ? 'en' : 'tr');
+        console.log('Test',language)}}>
+          {language === 'en' ? 'Switch to Turkish' : 'Switch to English'}
+        </button>
+      </header>
     </div>
   );
 }
+
+
 
 export default App;
